@@ -33,6 +33,29 @@ class Model {
         (_) => _mapboxRemote('dark-v11')),
     ExampleModel('Custom Theme', 'Demonstrates using a custom theme.',
         (_) => const LightCustomThemeExample()),
+    ExampleModel(
+        'Klokantech Basic',
+        'Demonstrates using a theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://cdn.jsdelivr.net/gh/openmaptiles/klokantech-basic-gl-style@v1.9/style.json',
+            'maptiler')),
+    ExampleModel(
+        'Dark Matter',
+        'Demonstrates using a theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://cdn.jsdelivr.net/gh/openmaptiles/dark-matter-gl-style@v1.8/style.json',
+            'maptiler')),
+    ExampleModel(
+        'OSM Bright',
+        'Demonstrates using a theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://cdn.jsdelivr.net/gh/openmaptiles/osm-bright-gl-style@v1.9/style.json',
+            'maptiler')),
+    ExampleModel(
+        'OSM Liberty',
+        'Demonstrates using a theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://maputnik.github.io/osm-liberty/style.json', 'maptiler')),
   ];
 }
 
@@ -42,6 +65,13 @@ class ExampleModel {
   final WidgetBuilder builder;
 
   ExampleModel(this.name, this.description, this.builder);
+}
+
+Widget _urlRemote(String url, String sourceId) {
+  return Loadable(
+      loader: () => loadRemoteTheme(url, key: apiKey(sourceId)),
+      builder: (_, remoteTheme) =>
+          DynamicStyleExample(remoteTheme: remoteTheme));
 }
 
 Widget _mapboxRemote(String styleId) {

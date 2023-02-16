@@ -11,7 +11,7 @@ class RemoteTheme {
   RemoteTheme(this.theme, this.providers);
 }
 
-Future<RemoteTheme> loadRemoteTheme(String url) async {
+Future<RemoteTheme> loadRemoteTheme(String url, {String? key}) async {
   if (url.startsWith('mapbox:')) {
     url = _httpUrlFromMapboxScheme(url);
   }
@@ -26,6 +26,8 @@ Future<RemoteTheme> loadRemoteTheme(String url) async {
       var entryUrl = entry.value['url'];
       if (entryUrl.startsWith('mapbox://')) {
         entryUrl = _httpSourceUrlFromMapboxScheme(entryUrl, _parameters(url));
+      } else {
+        entryUrl = _replaceKey(entryUrl, key);
       }
       final entryJson = jsonDecode(await _httpGet(entryUrl));
       final entryTiles = entryJson['tiles'];
@@ -44,6 +46,11 @@ Future<RemoteTheme> loadRemoteTheme(String url) async {
   throw 'Unexpected response';
 }
 
+String _replaceKey(url, String? key) {
+  return url.replaceAll(
+      RegExp(RegExp.escape('{key}')), Uri.encodeQueryComponent(key ?? ''));
+}
+
 Future<String> _httpGet(String url) async {
   final response = await get(Uri.parse(url));
   if (response.statusCode == 200) {
@@ -56,7 +63,7 @@ Future<String> _httpGet(String url) async {
 String _parameters(String url) {
   final match = RegExp(r'(.+?)\?(.+)').firstMatch(url);
   if (match == null) {
-    throw 'Unexpected format: $url';
+    return '';
   }
   return match.group(2)!;
 }

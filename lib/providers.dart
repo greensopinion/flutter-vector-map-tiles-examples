@@ -15,13 +15,17 @@ class Providers {
           maximumZoom: 14, urlTemplate: urlTemplateWithApiKey(id, urlTemplate));
 }
 
-String urlTemplateWithApiKey(String id, String urlTemplate) {
+String apiKey(String id) {
   final apiKey = apiKeys()[id];
   if (apiKey == null || apiKey.isEmpty) {
     throw 'No API key available for $id, update api_keys.dart with your API key!';
   }
+  return apiKey;
+}
+
+String urlTemplateWithApiKey(String id, String urlTemplate) {
   return urlTemplate.replaceAll(
-      RegExp(RegExp.escape(apiKeyToken)), Uri.encodeQueryComponent(apiKey));
+      RegExp(RegExp.escape(apiKeyToken)), Uri.encodeQueryComponent(apiKey(id)));
 }
 
 const apiKeyToken = '{apiKey}';
