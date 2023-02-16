@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:vector_map_examples/examples/light_custom_theme.dart';
 
 import 'examples/dynamic.dart';
 import 'examples/maptiler.dart';
@@ -20,7 +21,7 @@ class Model {
         (_) => const MaptilerExample()),
     ExampleModel(
         'Thunderforest',
-        'Demonstrates using thunderforest tile provider. Includes hillshade and terrain contours.',
+        'Demonstrates using thunderforest tile provider. Includes hillshade and terrain contours and a custom theme.',
         (_) => const ThunderforestExample()),
     ExampleModel('Mapbox Outdoors', 'Demonstrates using Mapbox outdoors theme.',
         (_) => _mapboxRemote('outdoors-v12')),
@@ -30,6 +31,8 @@ class Model {
         (_) => _mapboxRemote('light-v11')),
     ExampleModel('Mapbox Dark', 'Demonstrates using Mapbox dark theme.',
         (_) => _mapboxRemote('dark-v11')),
+    ExampleModel('Custom Theme', 'Demonstrates using a custom theme.',
+        (_) => const LightCustomThemeExample()),
   ];
 }
 
