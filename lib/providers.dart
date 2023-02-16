@@ -7,6 +7,8 @@ class Providers {
   static VectorTileProvider thunderForestOutdoorsV2() => _provider(
       'thunderforest',
       'https://a.tile.thunderforest.com/thunderforest.outdoors-v2/{z}/{x}/{y}.vector.pbf?apikey=$apiKeyToken');
+  static VectorTileProvider mapTiler() => _provider('maptiler',
+      'https://api.maptiler.com/tiles/v3/tiles.json?key=$apiKeyToken');
 
   static NetworkVectorTileProvider _provider(String id, String urlTemplate) =>
       NetworkVectorTileProvider(
