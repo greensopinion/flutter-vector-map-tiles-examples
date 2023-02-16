@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vector_map_examples/model.dart';
+import 'model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
               title: const Text(
             'vector_map_tiles examples',
           )),
-          body: const MainPage()),
+          body: const SafeArea(child: MainPage())),
     );
   }
 }
@@ -53,5 +53,5 @@ class _ExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(title: Text(example.name)),
-      body: example.builder(context));
+      body: SafeArea(child: example.builder(context)));
 }

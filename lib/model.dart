@@ -1,9 +1,17 @@
 import 'package:flutter/widgets.dart';
+import 'examples/basic.dart';
+import 'examples/thunderforest.dart';
 
 class Model {
   final List<ExampleModel> examples = [
-    ExampleModel('Placeholder', 'A placeholder to demonstrate an example.',
-        (_) => Text('This is a placeholder'))
+    ExampleModel(
+        'Basic',
+        'Demonstrates the most basic use with the default theme.',
+        (_) => const BasicExample()),
+    ExampleModel(
+        'Thunderforest',
+        'Demonstrates using thunderforest tile provider. Includes hillshade and terrain contours.',
+        (_) => const ThunderforestExample())
   ];
 }
 
