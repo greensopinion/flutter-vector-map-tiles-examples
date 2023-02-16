@@ -10,16 +10,16 @@ class Providers {
 
   static NetworkVectorTileProvider _provider(String id, String urlTemplate) =>
       NetworkVectorTileProvider(
-          maximumZoom: 14,
-          urlTemplate: _urlTemplateWithApiKey(id, urlTemplate));
+          maximumZoom: 14, urlTemplate: urlTemplateWithApiKey(id, urlTemplate));
+}
 
-  static String _urlTemplateWithApiKey(String id, String urlTemplate) {
-    final apiKey = apiKeys()[id];
-    if (apiKey == null || apiKey.isEmpty) {
-      throw 'No API key available for $id, update api_keys.dart with your API key!';
-    }
-    return urlTemplate.replaceAll(RegExp(RegExp.escape(apiKeyToken)), apiKey);
+String urlTemplateWithApiKey(String id, String urlTemplate) {
+  final apiKey = apiKeys()[id];
+  if (apiKey == null || apiKey.isEmpty) {
+    throw 'No API key available for $id, update api_keys.dart with your API key!';
   }
+  return urlTemplate.replaceAll(
+      RegExp(RegExp.escape(apiKeyToken)), Uri.encodeQueryComponent(apiKey));
 }
 
 const apiKeyToken = '{apiKey}';

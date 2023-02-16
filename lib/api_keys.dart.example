@@ -2,6 +2,7 @@
 Map<String, String> apiKeys() {
   return {
     'stadia-maps': '',
-    'thunderforest': ''
+    'thunderforest': '',
+    'mapbox':''
   };
 }

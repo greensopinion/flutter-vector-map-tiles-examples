@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'example_page.dart';
 import 'model.dart';
 
 void main() {
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: Map.fromEntries(Model().examples.map(
-          (e) => MapEntry(e.name, ((context) => _ExamplePage(example: e))))),
+          (e) => MapEntry(e.name, ((context) => ExamplePage(example: e))))),
       home: Scaffold(
           appBar: AppBar(
               title: const Text(
@@ -43,15 +45,4 @@ class MainPage extends StatelessWidget {
                     subtitle: Text(e.description))))
             .toList(),
       );
-}
-
-class _ExamplePage extends StatelessWidget {
-  final ExampleModel example;
-
-  const _ExamplePage({super.key, required this.example});
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: Text(example.name)),
-      body: SafeArea(child: example.builder(context)));
 }
