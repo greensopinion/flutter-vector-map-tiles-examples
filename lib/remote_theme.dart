@@ -11,7 +11,8 @@ class RemoteTheme {
   RemoteTheme(this.theme, this.providers);
 }
 
-Future<RemoteTheme> loadRemoteTheme(String url, {String? key}) async {
+Future<RemoteTheme> loadRemoteTheme(String url,
+    {String? key, String? keyParameter}) async {
   if (url.startsWith('mapbox:')) {
     url = _httpUrlFromMapboxScheme(url);
   }
@@ -23,18 +24,30 @@ Future<RemoteTheme> loadRemoteTheme(String url, {String? key}) async {
         .where((s) => s.value['type'] == 'vector' && s.value['url'] is String)
         .toList();
     for (final entry in sourceEntries) {
-      var entryUrl = entry.value['url'];
+      var entryUrl = entry.value['url'] as String;
       if (entryUrl.startsWith('mapbox://')) {
         entryUrl = _httpSourceUrlFromMapboxScheme(entryUrl, _parameters(url));
       } else {
+        if (keyParameter != null && !entryUrl.contains(_keyToken)) {
+          entryUrl = _appendKeyToken(entryUrl, keyParameter);
+        }
         entryUrl = _replaceKey(entryUrl, key);
       }
       final entryJson = jsonDecode(await _httpGet(entryUrl));
       final entryTiles = entryJson['tiles'];
       final maxzoom = entryJson['maxzoom'] as int? ?? 14;
       if (entryTiles is List && entryTiles.isNotEmpty) {
+        var tileUrl = entryTiles[0] as String;
+        if (keyParameter != null) {
+          if (!tileUrl.contains(_keyToken) &&
+              key != null &&
+              !tileUrl.contains(Uri.encodeQueryComponent(key))) {
+            tileUrl = _appendKeyToken(tileUrl, keyParameter);
+          }
+          tileUrl = _replaceKey(tileUrl, key);
+        }
         providers[entry.key] = NetworkVectorTileProvider(
-            urlTemplate: entryTiles[0], maximumZoom: maxzoom);
+            urlTemplate: tileUrl, maximumZoom: maxzoom);
       }
     }
     if (providers.isEmpty) {
@@ -46,9 +59,19 @@ Future<RemoteTheme> loadRemoteTheme(String url, {String? key}) async {
   throw 'Unexpected response';
 }
 
+String _appendKeyToken(String url, String keyParameter) {
+  String newUrl = url;
+  if (newUrl.contains('?')) {
+    newUrl = '$newUrl&';
+  } else {
+    newUrl = '$newUrl?';
+  }
+  return '$newUrl$keyParameter=$_keyToken';
+}
+
 String _replaceKey(url, String? key) {
   return url.replaceAll(
-      RegExp(RegExp.escape('{key}')), Uri.encodeQueryComponent(key ?? ''));
+      RegExp(RegExp.escape(_keyToken)), Uri.encodeQueryComponent(key ?? ''));
 }
 
 Future<String> _httpGet(String url) async {
@@ -87,3 +110,5 @@ String _httpUrlFromMapboxScheme(String url) {
   final parameters = match.group(3);
   return 'https://api.mapbox.com/styles/v1/$username/$styleId?$parameters';
 }
+
+const String _keyToken = '{key}';

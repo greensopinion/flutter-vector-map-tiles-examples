@@ -21,7 +21,7 @@ class Model {
         (_) => const MaptilerExample()),
     ExampleModel(
         'Thunderforest',
-        'Demonstrates using thunderforest tile provider. Includes hillshade and terrain contours and a custom theme.',
+        'Demonstrates Thunderforest with a custom theme, includes hillshade and terrain contours.',
         (_) => const ThunderforestExample()),
     ExampleModel('Mapbox Outdoors', 'Demonstrates using Mapbox outdoors theme.',
         (_) => _mapboxRemote('outdoors-v12')),
@@ -56,6 +56,19 @@ class Model {
         'Demonstrates using a theme loaded via URL.',
         (_) => _urlRemote(
             'https://maputnik.github.io/osm-liberty/style.json', 'maptiler')),
+    ExampleModel(
+        'Stadia Maps Alidade Smooth',
+        'Demonstrates using Stadia Maps with Alidade Smooth loaded via URL.',
+        (_) => _urlRemote(
+            'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
+            'stadia-maps',
+            keyParameter: 'api_key')),
+    ExampleModel(
+        'Stadia Maps Outdoors',
+        'Demonstrates using Stadia Maps with Outdoors loaded via URL.',
+        (_) => _urlRemote(
+            'https://tiles.stadiamaps.com/styles/outdoors.json', 'stadia-maps',
+            keyParameter: 'api_key')),
   ];
 }
 
@@ -67,9 +80,10 @@ class ExampleModel {
   ExampleModel(this.name, this.description, this.builder);
 }
 
-Widget _urlRemote(String url, String sourceId) {
+Widget _urlRemote(String url, String sourceId, {String? keyParameter}) {
   return Loadable(
-      loader: () => loadRemoteTheme(url, key: apiKey(sourceId)),
+      loader: () => loadRemoteTheme(url,
+          key: apiKey(sourceId), keyParameter: keyParameter),
       builder: (_, remoteTheme) =>
           DynamicStyleExample(remoteTheme: remoteTheme));
 }
