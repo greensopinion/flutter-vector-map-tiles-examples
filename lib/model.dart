@@ -12,11 +12,11 @@ import 'remote_theme.dart';
 class Model {
   final List<ExampleModel> examples = [
     ExampleModel(
-        'Stadia Maps',
+        'Default Theme: Stadia Maps',
         'Demonstrates Stadia Maps with the default theme.',
         (_) => const StadiaMapsExample()),
     ExampleModel(
-        'MapTiler',
+        'Default Theme: MapTiler',
         'Demonstrates use of MapTiler with the default theme.',
         (_) => const MaptilerExample()),
     ExampleModel(
@@ -34,11 +34,29 @@ class Model {
     ExampleModel('Custom Theme', 'Demonstrates using a custom theme.',
         (_) => const LightCustomThemeExample()),
     ExampleModel(
-        'Klokantech Basic',
-        'Demonstrates using a theme loaded via URL.',
-        (_) => _urlRemote(
-            'https://cdn.jsdelivr.net/gh/openmaptiles/klokantech-basic-gl-style@v1.9/style.json',
-            sourceId: 'maptiler')),
+        'MapTiler Dark',
+        'Demonstrates using MapTiler with the Dark theme loaded via URL.',
+        (_) => _maptilerRemote('basic-v2-dark')),
+    ExampleModel(
+        'MapTiler Light',
+        'Demonstrates using MapTiler with the Light theme loaded via URL.',
+        (_) => _maptilerRemote('basic-v2-light')),
+    ExampleModel(
+        'MapTiler Basic',
+        'Demonstrates using MapTiler with the Light theme loaded via URL.',
+        (_) => _maptilerRemote('basic-v2')),
+    ExampleModel(
+        'MapTiler Outdoor',
+        'Demonstrates using MapTiler with the Outdoor theme loaded via URL.',
+        (_) => _maptilerRemote('outdoor')),
+    ExampleModel(
+        'MapTiler Streets',
+        'Demonstrates using MapTiler with the Streets theme loaded via URL.',
+        (_) => _maptilerRemote('streets-v2')),
+    ExampleModel(
+        'MapTiler Winter',
+        'Demonstrates using MapTiler with the Winter theme loaded via URL.',
+        (_) => _maptilerRemote('winter')),
     ExampleModel(
         'Dark Matter',
         'Demonstrates using a theme loaded via URL.',
@@ -124,6 +142,14 @@ Widget _mapboxRemote(String styleId) {
   return Loadable(
       loader: () => loadRemoteTheme(urlTemplateWithApiKey('mapbox',
           'mapbox://styles/mapbox/$styleId?access_token=$apiKeyToken')),
+      builder: (_, remoteTheme) =>
+          DynamicStyleExample(remoteTheme: remoteTheme));
+}
+
+Widget _maptilerRemote(String styleId) {
+  return Loadable(
+      loader: () => loadRemoteTheme(urlTemplateWithApiKey('maptiler',
+          'https://api.maptiler.com/maps/$styleId/style.json?key=$apiKeyToken')),
       builder: (_, remoteTheme) =>
           DynamicStyleExample(remoteTheme: remoteTheme));
 }

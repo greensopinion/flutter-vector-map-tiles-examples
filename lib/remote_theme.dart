@@ -63,6 +63,10 @@ Future<RemoteTheme> loadRemoteTheme(String url,
           LatLng((center[1] as num).toDouble(), (center[0] as num).toDouble());
     }
     double? zoom = (json['zoom'] as num?)?.toDouble();
+    if (zoom != null && zoom < 2) {
+      zoom = null;
+      centerPoint = null;
+    }
     return RemoteTheme(ThemeReader(logger: const Logger.console()).read(json),
         TileProviders(providers),
         center: centerPoint, zoom: zoom);
