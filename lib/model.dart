@@ -57,6 +57,18 @@ class Model {
         (_) => _urlRemote('https://maputnik.github.io/osm-liberty/style.json',
             sourceId: 'maptiler')),
     ExampleModel(
+        'Toner',
+        'Demonstrates using MapTiler with Toner theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://cdn.jsdelivr.net/gh/openmaptiles/toner-gl-style@339e5b7/style.json',
+            sourceId: 'maptiler')),
+    ExampleModel(
+        'Positron',
+        'Demonstrates using MapTiler with Positron theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://cdn.jsdelivr.net/gh/openmaptiles/positron-gl-style@v1.8/style.json',
+            sourceId: 'maptiler')),
+    ExampleModel(
         'Stadia Maps Alidade Smooth',
         'Demonstrates using Stadia Maps with Alidade Smooth loaded via URL.',
         (_) => _urlRemote(
@@ -73,6 +85,21 @@ class Model {
         'Demonstrates using OS Open Zoomstack with Outdoor theme loaded via URL.',
         (_) => _urlRemote(
             'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-outdoor/style.json')),
+    ExampleModel(
+        'OS Open Zoomstack - Road',
+        'Demonstrates using OS Open Zoomstack with Road theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-road/style.json')),
+    ExampleModel(
+        'OS Open Zoomstack - Light',
+        'Demonstrates using OS Open Zoomstack with Light theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-light/style.json')),
+    ExampleModel(
+        'OS Open Zoomstack - Night',
+        'Demonstrates using OS Open Zoomstack with Night theme loaded via URL.',
+        (_) => _urlRemote(
+            'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-night/style.json')),
   ]..sort((a, b) => a.name.compareTo(b.name));
 }
 
