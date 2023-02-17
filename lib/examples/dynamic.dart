@@ -10,6 +10,7 @@ class DynamicStyleExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(
+      center: remoteTheme.center,
       layerFactory: (context) => VectorTileLayer(
           tileProviders: remoteTheme.providers, theme: remoteTheme.theme));
 }

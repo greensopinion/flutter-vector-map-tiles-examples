@@ -5,8 +5,11 @@ import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 class MapWidget extends StatefulWidget {
   final VectorTileLayer Function(BuildContext) layerFactory;
+  final LatLng? center;
+  final double? zoom;
 
-  const MapWidget({super.key, required this.layerFactory});
+  const MapWidget(
+      {super.key, required this.layerFactory, this.center, this.zoom});
 
   @override
   State<StatefulWidget> createState() => _MapWidget();
@@ -20,8 +23,8 @@ class _MapWidget extends State<MapWidget> {
     return FlutterMap(
       mapController: _controller,
       options: MapOptions(
-          center: LatLng(43.7763331, 7.4733097),
-          zoom: 13,
+          center: widget.center ?? LatLng(43.7763331, 7.4733097),
+          zoom: widget.zoom ?? 13,
           maxZoom: 22,
           interactiveFlags: InteractiveFlag.drag |
               InteractiveFlag.flingAnimation |

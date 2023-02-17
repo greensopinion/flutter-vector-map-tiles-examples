@@ -38,38 +38,42 @@ class Model {
         'Demonstrates using a theme loaded via URL.',
         (_) => _urlRemote(
             'https://cdn.jsdelivr.net/gh/openmaptiles/klokantech-basic-gl-style@v1.9/style.json',
-            'maptiler')),
+            sourceId: 'maptiler')),
     ExampleModel(
         'Dark Matter',
         'Demonstrates using a theme loaded via URL.',
         (_) => _urlRemote(
             'https://cdn.jsdelivr.net/gh/openmaptiles/dark-matter-gl-style@v1.8/style.json',
-            'maptiler')),
+            sourceId: 'maptiler')),
     ExampleModel(
         'OSM Bright',
         'Demonstrates using a theme loaded via URL.',
         (_) => _urlRemote(
             'https://cdn.jsdelivr.net/gh/openmaptiles/osm-bright-gl-style@v1.9/style.json',
-            'maptiler')),
+            sourceId: 'maptiler')),
     ExampleModel(
         'OSM Liberty',
         'Demonstrates using a theme loaded via URL.',
-        (_) => _urlRemote(
-            'https://maputnik.github.io/osm-liberty/style.json', 'maptiler')),
+        (_) => _urlRemote('https://maputnik.github.io/osm-liberty/style.json',
+            sourceId: 'maptiler')),
     ExampleModel(
         'Stadia Maps Alidade Smooth',
         'Demonstrates using Stadia Maps with Alidade Smooth loaded via URL.',
         (_) => _urlRemote(
             'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
-            'stadia-maps',
+            sourceId: 'stadia-maps',
             keyParameter: 'api_key')),
     ExampleModel(
         'Stadia Maps Outdoors',
         'Demonstrates using Stadia Maps with Outdoors loaded via URL.',
+        (_) => _urlRemote('https://tiles.stadiamaps.com/styles/outdoors.json',
+            sourceId: 'stadia-maps', keyParameter: 'api_key')),
+    ExampleModel(
+        'OS Open Zoomstack - Outdoor',
+        'Demonstrates using OS Open Zoomstack with Outdoor theme loaded via URL.',
         (_) => _urlRemote(
-            'https://tiles.stadiamaps.com/styles/outdoors.json', 'stadia-maps',
-            keyParameter: 'api_key')),
-  ];
+            'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-outdoor/style.json')),
+  ]..sort((a, b) => a.name.compareTo(b.name));
 }
 
 class ExampleModel {
@@ -80,10 +84,11 @@ class ExampleModel {
   ExampleModel(this.name, this.description, this.builder);
 }
 
-Widget _urlRemote(String url, String sourceId, {String? keyParameter}) {
+Widget _urlRemote(String url, {String? sourceId, String? keyParameter}) {
   return Loadable(
       loader: () => loadRemoteTheme(url,
-          key: apiKey(sourceId), keyParameter: keyParameter),
+          key: sourceId == null ? null : apiKey(sourceId),
+          keyParameter: keyParameter),
       builder: (_, remoteTheme) =>
           DynamicStyleExample(remoteTheme: remoteTheme));
 }

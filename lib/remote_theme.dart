@@ -1,14 +1,17 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 class RemoteTheme {
   final Theme theme;
   final TileProviders providers;
+  final LatLng? center;
+  final double? zoom;
 
-  RemoteTheme(this.theme, this.providers);
+  RemoteTheme(this.theme, this.providers, {this.center, this.zoom});
 }
 
 Future<RemoteTheme> loadRemoteTheme(String url,
@@ -53,8 +56,16 @@ Future<RemoteTheme> loadRemoteTheme(String url,
     if (providers.isEmpty) {
       throw 'Unexpected response';
     }
+    final center = json['center'];
+    LatLng? centerPoint;
+    if (center is List && center.length == 2) {
+      centerPoint =
+          LatLng((center[1] as num).toDouble(), (center[0] as num).toDouble());
+    }
+    double? zoom = (json['zoom'] as num?)?.toDouble();
     return RemoteTheme(ThemeReader(logger: const Logger.console()).read(json),
-        TileProviders(providers));
+        TileProviders(providers),
+        center: centerPoint, zoom: zoom);
   }
   throw 'Unexpected response';
 }
