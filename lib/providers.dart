@@ -28,4 +28,4 @@ String urlTemplateWithApiKey(String id, String urlTemplate) {
       RegExp(RegExp.escape(apiKeyToken)), Uri.encodeQueryComponent(apiKey(id)));
 }
 
-const apiKeyToken = '{apiKey}';
+const apiKeyToken = '{key}';

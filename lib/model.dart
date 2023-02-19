@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:vector_map_examples/examples/light_custom_theme.dart';
+import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 import 'examples/dynamic.dart';
 import 'examples/maptiler.dart';
@@ -7,7 +8,6 @@ import 'examples/stadiamaps.dart';
 import 'examples/thunderforest.dart';
 import 'loadable.dart';
 import 'providers.dart';
-import 'remote_theme.dart';
 
 class Model {
   final List<ExampleModel> examples = [
@@ -90,14 +90,14 @@ class Model {
         'Stadia Maps Alidade Smooth',
         'Demonstrates using Stadia Maps with Alidade Smooth loaded via URL.',
         (_) => _urlRemote(
-            'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
-            sourceId: 'stadia-maps',
-            keyParameter: 'api_key')),
+            'https://tiles.stadiamaps.com/styles/alidade_smooth.json?api_key={key}',
+            sourceId: 'stadia-maps')),
     ExampleModel(
         'Stadia Maps Outdoors',
         'Demonstrates using Stadia Maps with Outdoors loaded via URL.',
-        (_) => _urlRemote('https://tiles.stadiamaps.com/styles/outdoors.json',
-            sourceId: 'stadia-maps', keyParameter: 'api_key')),
+        (_) => _urlRemote(
+            'https://tiles.stadiamaps.com/styles/outdoors.json?api_key={key}',
+            sourceId: 'stadia-maps')),
     ExampleModel(
         'OS Open Zoomstack - Outdoor',
         'Demonstrates using OS Open Zoomstack with Outdoor theme loaded via URL.',
@@ -129,27 +129,29 @@ class ExampleModel {
   ExampleModel(this.name, this.description, this.builder);
 }
 
-Widget _urlRemote(String url, {String? sourceId, String? keyParameter}) {
+Widget _urlRemote(String url, {String? sourceId}) {
   return Loadable(
-      loader: () => loadRemoteTheme(url,
-          key: sourceId == null ? null : apiKey(sourceId),
-          keyParameter: keyParameter),
-      builder: (_, remoteTheme) =>
-          DynamicStyleExample(remoteTheme: remoteTheme));
+      loader: () => StyleReader(
+              uri: url, apiKey: sourceId == null ? null : apiKey(sourceId))
+          .read(),
+      builder: (_, remoteTheme) => DynamicStyleExample(style: remoteTheme));
 }
 
 Widget _mapboxRemote(String styleId) {
   return Loadable(
-      loader: () => loadRemoteTheme(urlTemplateWithApiKey('mapbox',
-          'mapbox://styles/mapbox/$styleId?access_token=$apiKeyToken')),
-      builder: (_, remoteTheme) =>
-          DynamicStyleExample(remoteTheme: remoteTheme));
+      loader: () => StyleReader(
+              uri: 'mapbox://styles/mapbox/$styleId?access_token={key}',
+              apiKey: apiKey('mapbox'))
+          .read(),
+      builder: (_, remoteTheme) => DynamicStyleExample(style: remoteTheme));
 }
 
 Widget _maptilerRemote(String styleId) {
   return Loadable(
-      loader: () => loadRemoteTheme(urlTemplateWithApiKey('maptiler',
-          'https://api.maptiler.com/maps/$styleId/style.json?key=$apiKeyToken')),
-      builder: (_, remoteTheme) =>
-          DynamicStyleExample(remoteTheme: remoteTheme));
+      loader: () => StyleReader(
+              uri:
+                  'https://api.maptiler.com/maps/$styleId/style.json?key={key}',
+              apiKey: apiKey('maptiler'))
+          .read(),
+      builder: (_, remoteTheme) => DynamicStyleExample(style: remoteTheme));
 }
