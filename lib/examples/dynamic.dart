@@ -5,11 +5,16 @@ import '../map.dart';
 
 class DynamicStyleExample extends StatelessWidget {
   final Style style;
-  const DynamicStyleExample({super.key, required this.style});
+  final TileOffset tileOffset;
+  const DynamicStyleExample(
+      {super.key, required this.style, this.tileOffset = TileOffset.DEFAULT});
 
   @override
   Widget build(BuildContext context) => MapWidget(
       center: style.center,
-      layerFactory: (context) =>
-          VectorTileLayer(tileProviders: style.providers, theme: style.theme));
+      layerFactory: (context, layerMode) => VectorTileLayer(
+          tileProviders: style.providers,
+          theme: style.theme,
+          layerMode: layerMode,
+          tileOffset: tileOffset));
 }

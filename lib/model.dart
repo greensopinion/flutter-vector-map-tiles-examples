@@ -143,7 +143,8 @@ Widget _mapboxRemote(String styleId) {
               uri: 'mapbox://styles/mapbox/$styleId?access_token={key}',
               apiKey: apiKey('mapbox'))
           .read(),
-      builder: (_, remoteTheme) => DynamicStyleExample(style: remoteTheme));
+      builder: (_, remoteTheme) => DynamicStyleExample(
+          style: remoteTheme, tileOffset: TileOffset.mapbox));
 }
 
 Widget _maptilerRemote(String styleId) {

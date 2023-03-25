@@ -10,7 +10,8 @@ class LightCustomThemeExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(
-      layerFactory: (context) => VectorTileLayer(
+      layerFactory: (context, layerMode) => VectorTileLayer(
+          layerMode: layerMode,
           tileProviders:
               TileProviders({'openmaptiles': Providers.stadiaMaps()}),
           theme: ThemeReader().read(_lightStyle())));

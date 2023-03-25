@@ -10,7 +10,8 @@ class ThunderforestExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(
-      layerFactory: (context) => VectorTileLayer(
+      layerFactory: (context, layerMode) => VectorTileLayer(
+          layerMode: layerMode,
           tileProviders: TileProviders(
               {'thunderforest_outdoors': Providers.thunderForestOutdoorsV2()}),
           theme: ThemeReader().read(thunderStyle())));
