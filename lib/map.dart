@@ -4,7 +4,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 class MapWidget extends StatefulWidget {
-  final VectorTileLayer Function(BuildContext) layerFactory;
+  final VectorTileLayer Function(BuildContext, VectorTileLayerMode mode)
+      layerFactory;
   final LatLng? center;
   final double? zoom;
 
@@ -17,24 +18,28 @@ class MapWidget extends StatefulWidget {
 
 class _MapWidget extends State<MapWidget> {
   final MapController _controller = MapController();
+  var _layerMode = VectorTileLayerMode.raster;
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Expanded(
-          child: FlutterMap(
-        mapController: _controller,
-        options: MapOptions(
-            center: widget.center ?? LatLng(43.7763331, 7.4733097),
-            zoom: widget.zoom ?? 13,
-            maxZoom: 22,
-            interactiveFlags: InteractiveFlag.drag |
-                InteractiveFlag.flingAnimation |
-                InteractiveFlag.pinchMove |
-                InteractiveFlag.pinchZoom |
-                InteractiveFlag.doubleTapZoom),
-        children: [widget.layerFactory(context)],
-      )),
+          child: Stack(children: [
+        FlutterMap(
+          mapController: _controller,
+          options: MapOptions(
+              center: widget.center ?? LatLng(43.7763331, 7.4733097),
+              zoom: widget.zoom ?? 13,
+              maxZoom: 22,
+              interactiveFlags: InteractiveFlag.drag |
+                  InteractiveFlag.flingAnimation |
+                  InteractiveFlag.pinchMove |
+                  InteractiveFlag.pinchZoom |
+                  InteractiveFlag.doubleTapZoom),
+          children: [widget.layerFactory(context, _layerMode)],
+        ),
+        Positioned(top: 0, right: 0, child: _modeButton(context))
+      ])),
       Wrap(alignment: WrapAlignment.spaceBetween, children: [
         _positionButton('London', 51.515556, -0.093056),
         _positionButton('Paris', 48.8566, 2.3522),
@@ -51,5 +56,29 @@ class _MapWidget extends State<MapWidget> {
             '$name ${latitude.toStringAsFixed(2)},${longitude.toStringAsFixed(2)}'),
         onPressed: () =>
             _controller.move(LatLng(latitude, longitude), _controller.zoom));
+  }
+
+  Widget _modeButton(BuildContext context) {
+    return Container(
+        color: Theme.of(context).canvasColor,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          const Text("Mode"),
+          ToggleButtons(
+              onPressed: (index) {
+                setState(() {
+                  _layerMode = index == 0
+                      ? VectorTileLayerMode.raster
+                      : VectorTileLayerMode.vector;
+                });
+              },
+              isSelected: [
+                _layerMode == VectorTileLayerMode.raster,
+                _layerMode == VectorTileLayerMode.vector
+              ],
+              children: const [
+                Text('Raster'),
+                Text('Vector'),
+              ])
+        ]));
   }
 }
