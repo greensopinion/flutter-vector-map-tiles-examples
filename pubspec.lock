@@ -53,10 +53,10 @@ packages:
     dependency: transitive
     description:
       name: executor_lib
-      sha256: "0bd5c9fe0dfe0f6ab058c94515c387a169e518f94173e08a372d3ea8dd05def3"
+      sha256: "195ea4b3b7bf3cb6c7a1930f0649d87afeb178ccf0628986c2d0661aa0263db2"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "1.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -395,10 +395,11 @@ packages:
   vector_map_tiles:
     dependency: "direct main"
     description:
-      path: "../vector_map_tiles"
-      relative: true
-    source: path
-    version: "3.2.0"
+      name: vector_map_tiles
+      sha256: "8f693321dfc73017e47a25a8ea48f275793927ccce7e1852cf3f5a1b92ad4d80"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.0"
   vector_math:
     dependency: transitive
     description:
@@ -418,10 +419,11 @@ packages:
   vector_tile_renderer:
     dependency: "direct main"
     description:
-      path: "../vector_tile_renderer"
-      relative: true
-    source: path
-    version: "3.1.2"
+      name: vector_tile_renderer
+      sha256: "0e2579e933f22bf12c8db2176587ecf246a6806ab4dde6817f7f77b631ead748"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   win32:
     dependency: transitive
     description:
