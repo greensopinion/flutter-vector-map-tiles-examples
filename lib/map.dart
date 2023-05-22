@@ -38,7 +38,18 @@ class _MapWidget extends State<MapWidget> {
                   InteractiveFlag.doubleTapZoom),
           children: [widget.layerFactory(context, _layerMode)],
         ),
-        Positioned(top: 0, right: 0, child: _modeButton(context))
+        Positioned(
+            top: 0,
+            right: 0,
+            child: Container(
+              color: Theme.of(context).canvasColor,
+              child: Column(
+                  children: [_modeButton(context), _mapInfo(context)]
+                      .map((e) => Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 2),
+                          child: e))
+                      .toList()),
+            ))
       ])),
       Wrap(alignment: WrapAlignment.spaceBetween, children: [
         _positionButton('London', 51.515556, -0.093056),
@@ -80,5 +91,43 @@ class _MapWidget extends State<MapWidget> {
                 Text('Vector'),
               ])
         ]));
+  }
+
+  Widget _mapInfo(BuildContext context) =>
+      _MapStateInfo(mapController: _controller);
+}
+
+class _MapStateInfo extends StatefulWidget {
+  final MapController mapController;
+
+  const _MapStateInfo({super.key, required this.mapController});
+
+  @override
+  State<StatefulWidget> createState() => _MapStateInfoState();
+}
+
+class _MapStateInfoState extends State<_MapStateInfo> {
+  bool _disposed = false;
+  void onMapChange(event) {
+    if (!_disposed) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.mapController.mapEventStream.listen(onMapChange);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _disposed = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Zoom: ${widget.mapController.zoom.toStringAsFixed(2)}');
   }
 }
