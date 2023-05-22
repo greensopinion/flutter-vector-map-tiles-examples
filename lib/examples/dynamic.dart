@@ -15,6 +15,7 @@ class DynamicStyleExample extends StatelessWidget {
       layerFactory: (context, layerMode) => VectorTileLayer(
           tileProviders: style.providers,
           theme: style.theme,
+          sprites: style.sprites,
           layerMode: layerMode,
           tileOffset: tileOffset));
 }
