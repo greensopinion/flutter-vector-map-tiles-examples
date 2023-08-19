@@ -47,10 +47,6 @@ class Model {
         'Demonstrates using MapTiler with the Light theme loaded via URL.',
         (_) => _maptilerRemote('basic-v2')),
     ExampleModel(
-        'MapTiler Outdoor',
-        'Demonstrates using MapTiler with the Outdoor theme loaded via URL.',
-        (_) => _maptilerRemote('outdoor')),
-    ExampleModel(
         'MapTiler Outdoor V2',
         'Demonstrates using MapTiler with the Outdoor V2 theme loaded via URL.',
         (_) => _maptilerRemote('outdoor-v2')),
@@ -58,10 +54,6 @@ class Model {
         'MapTiler Streets',
         'Demonstrates using MapTiler with the Streets theme loaded via URL.',
         (_) => _maptilerRemote('streets-v2')),
-    ExampleModel(
-        'MapTiler Winter',
-        'Demonstrates using MapTiler with the Winter theme loaded via URL.',
-        (_) => _maptilerRemote('winter')),
     ExampleModel(
         'MapTiler Winter V2',
         'Demonstrates using MapTiler with the Winter V2 theme loaded via URL.',

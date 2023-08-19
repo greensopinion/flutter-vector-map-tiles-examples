@@ -22,13 +22,11 @@ class _Loadable<T> extends State<Loadable<T>> {
         .then((value) => setState(() {
               state = value;
             }))
-        .onError((error, stackTrace) => {
-              setState(() {
-                loadError = error?.toString();
-                // ignore: avoid_print
-                print(loadError);
-              })
-            });
+        .onError((error, stackTrace) => setState(() {
+              loadError = error?.toString();
+              // ignore: avoid_print
+              print(loadError);
+            }));
   }
 
   @override
@@ -41,6 +39,6 @@ class _Loadable<T> extends State<Loadable<T>> {
     if (errorMessage != null) {
       return Expanded(child: Text(errorMessage));
     }
-    return Column(children: const [Center(child: CircularProgressIndicator())]);
+    return const Column(children: [Center(child: CircularProgressIndicator())]);
   }
 }

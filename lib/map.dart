@@ -28,7 +28,7 @@ class _MapWidget extends State<MapWidget> {
         FlutterMap(
           mapController: _controller,
           options: MapOptions(
-              center: widget.center ?? LatLng(43.7763331, 7.4733097),
+              center: widget.center ?? const LatLng(43.7763331, 7.4733097),
               zoom: widget.zoom ?? 13,
               maxZoom: 22,
               interactiveFlags: InteractiveFlag.drag |
@@ -100,7 +100,7 @@ class _MapWidget extends State<MapWidget> {
 class _MapStateInfo extends StatefulWidget {
   final MapController mapController;
 
-  const _MapStateInfo({super.key, required this.mapController});
+  const _MapStateInfo({required this.mapController});
 
   @override
   State<StatefulWidget> createState() => _MapStateInfoState();
