@@ -31,7 +31,8 @@ class _MapWidget extends State<MapWidget> {
               center: widget.center ?? const LatLng(43.7763331, 7.4733097),
               zoom: widget.zoom ?? 13,
               maxZoom: 22,
-              interactiveFlags: InteractiveFlag.drag |
+              interactiveFlags: InteractiveFlag.rotate |
+                  InteractiveFlag.drag |
                   InteractiveFlag.flingAnimation |
                   InteractiveFlag.pinchMove |
                   InteractiveFlag.pinchZoom |
@@ -128,6 +129,23 @@ class _MapStateInfoState extends State<_MapStateInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Zoom: ${widget.mapController.zoom.toStringAsFixed(2)}');
+    return Padding(
+        padding: const EdgeInsets.all(8),
+        child: Wrap(direction: Axis.vertical, spacing: 8.0, children: [
+          Text('Zoom: ${widget.mapController.zoom.toStringAsFixed(2)}'),
+          Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
+            Text(
+                'Rotation: ${widget.mapController.rotation.toStringAsFixed(2)}'),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(4),
+                ),
+                onPressed: () {
+                  widget.mapController.rotate(0);
+                },
+                child: const Icon(Icons.north_rounded))
+          ])
+        ]));
   }
 }
