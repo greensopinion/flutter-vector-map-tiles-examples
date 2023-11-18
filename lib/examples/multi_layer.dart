@@ -1,26 +1,40 @@
-import 'package:flutter/material.dart' hide Theme;
+import 'package:flutter/material.dart';
+import 'package:vector_map_examples/map.dart';
+import 'package:vector_map_examples/providers.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
-import '../map.dart';
-import '../providers.dart';
-
-class LightCustomThemeExample extends StatelessWidget {
-  const LightCustomThemeExample({super.key});
+class MultiLayerExample extends StatelessWidget {
+  const MultiLayerExample({super.key});
 
   @override
   Widget build(BuildContext context) => MapWidget(layerFactories: [
+        // This example shows having multiple vector tile layers,
+        // however any widget can be used. For example, vector tile layers
+        // could be combined with any other map layer from flutter_map or
+        // third party plugins.
         (context, layerMode) => VectorTileLayer(
+            key: const Key('map_bottom_layer'),
+            layerMode: VectorTileLayerMode.raster,
+            tileOffset: const TileOffset(zoomOffset: 0),
+            tileProviders:
+                TileProviders({'openmaptiles': Providers.stadiaMaps()}),
+            theme: ThemeReader().read(_baseLayerStyle())),
+        // The top layer must not have a style with an opaque background layer in it
+        // otherwise the background layer will draw over other layers causing them
+        // to be invisible.
+        (context, layerMode) => VectorTileLayer(
+            key: const Key('map_top_layer'),
             layerMode: layerMode,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.stadiaMaps()}),
-            theme: ThemeReader().read(_lightStyle()))
+            theme: ThemeReader().read(_topLayerStyle()))
       ]);
 }
 
-dynamic _lightStyle() => {
+dynamic _baseLayerStyle() => {
       "version": 8,
-      "name": "Empty Style",
+      "name": "Base Style",
       "metadata": {"maputnik:renderer": "mbgljs", "version": "19"},
       "sources": {
         "openmaptiles": {
@@ -34,6 +48,62 @@ dynamic _lightStyle() => {
           "id": "background",
           "type": "background",
           "paint": {"background-color": "#EEEEEE"}
+        },
+        {
+          "id": "park",
+          "type": "fill",
+          "source": "openmaptiles",
+          "source-layer": "park",
+          "paint": {"fill-color": "#81c784", "fill-opacity": 0.5}
+        },
+        {
+          "id": "landcover_grass_wood_sand_ice",
+          "type": "fill",
+          "source": "openmaptiles",
+          "source-layer": "landcover",
+          "filter": ["in", "class", "grass", "wood", "sand", "ice"],
+          "paint": {
+            "fill-color": [
+              "match",
+              ["get", "class"],
+              "sand",
+              "#fffde7",
+              "ice",
+              "rgba(206, 240, 253, 1)",
+              "#81c784"
+            ],
+            "fill-opacity": [
+              "match",
+              ["get", "class"],
+              "grass",
+              0.2,
+              "wood",
+              0.5,
+              "ice",
+              0.8,
+              1.0
+            ]
+          }
+        },
+        {
+          "id": "landuse_special",
+          "type": "fill",
+          "source": "openmaptiles",
+          "source-layer": "landuse",
+          "minzoom": 15.0,
+          "filter": ["in", "class", "cemetery", "hospital", "school"],
+          "paint": {"fill-color": "#eceff1", "fill-outline-color": "#cfd8dc"}
+        },
+        {
+          "id": "water",
+          "type": "fill",
+          "source": "openmaptiles",
+          "source-layer": "water",
+          "filter": [
+            "all",
+            ["!=", "brunnel", "tunnel"]
+          ],
+          "paint": {"fill-color": "#bbdefb"}
         },
         {
           "id": "park",
@@ -750,6 +820,22 @@ dynamic _lightStyle() => {
             }
           }
         },
+      ],
+      "id": "multi_base_light"
+    };
+
+dynamic _topLayerStyle() => {
+      "version": 8,
+      "name": "Empty Style",
+      "metadata": {"maputnik:renderer": "mbgljs", "version": "19"},
+      "sources": {
+        "openmaptiles": {
+          "type": "vector",
+          "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
+        },
+        "hillshade": {"type": "vector", "url": ""}
+      },
+      "layers": [
         {
           "id": "buildings",
           "type": "fill",
@@ -1121,5 +1207,5 @@ dynamic _lightStyle() => {
           }
         }
       ],
-      "id": "light"
+      "id": "multi_light"
     };

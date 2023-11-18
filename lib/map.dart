@@ -3,14 +3,15 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
+typedef LayerFactory = Widget Function(BuildContext, VectorTileLayerMode mode);
+
 class MapWidget extends StatefulWidget {
-  final VectorTileLayer Function(BuildContext, VectorTileLayerMode mode)
-      layerFactory;
+  final List<LayerFactory> layerFactories;
   final LatLng? center;
   final double? zoom;
 
   const MapWidget(
-      {super.key, required this.layerFactory, this.center, this.zoom});
+      {super.key, required this.layerFactories, this.center, this.zoom});
 
   @override
   State<StatefulWidget> createState() => _MapWidget();
@@ -37,7 +38,9 @@ class _MapWidget extends State<MapWidget> {
                   InteractiveFlag.pinchMove |
                   InteractiveFlag.pinchZoom |
                   InteractiveFlag.doubleTapZoom),
-          children: [widget.layerFactory(context, _layerMode)],
+          children: widget.layerFactories
+              .map((layerFactory) => layerFactory(context, _layerMode))
+              .toList(),
         ),
         Positioned(
             top: 0,

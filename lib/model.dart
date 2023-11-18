@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:vector_map_examples/examples/light_custom_theme.dart';
+import 'package:vector_map_examples/examples/multi_layer.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
@@ -119,6 +120,10 @@ class Model {
         'Demonstrates using OS Open Zoomstack with Night theme loaded via URL.',
         (_) => _urlRemote(
             'https://s3-eu-west-1.amazonaws.com/tiles.os.uk/v2/styles/open-zoomstack-night/style.json')),
+    ExampleModel(
+        'Multi Layer',
+        'Demonstrates using maps with multiple layers. A base layer is rendered with a raster style providing land and transport lines. A top layer is provided that renders either raster or vector providing labels and buildings.',
+        (_) => const MultiLayerExample(key: Key('multi_layer_example'))),
   ]..sort((a, b) => a.name.compareTo(b.name));
 }
 

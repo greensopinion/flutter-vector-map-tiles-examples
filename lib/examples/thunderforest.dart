@@ -9,12 +9,14 @@ class ThunderforestExample extends StatelessWidget {
   const ThunderforestExample({super.key});
 
   @override
-  Widget build(BuildContext context) => MapWidget(
-      layerFactory: (context, layerMode) => VectorTileLayer(
-          layerMode: layerMode,
-          tileProviders: TileProviders(
-              {'thunderforest_outdoors': Providers.thunderForestOutdoorsV2()}),
-          theme: ThemeReader().read(thunderStyle())));
+  Widget build(BuildContext context) => MapWidget(layerFactories: [
+        (context, layerMode) => VectorTileLayer(
+            layerMode: layerMode,
+            tileProviders: TileProviders({
+              'thunderforest_outdoors': Providers.thunderForestOutdoorsV2()
+            }),
+            theme: ThemeReader().read(thunderStyle()))
+      ]);
 }
 
 dynamic thunderStyle() => {

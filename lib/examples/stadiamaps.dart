@@ -9,10 +9,11 @@ class StadiaMapsExample extends StatelessWidget {
   const StadiaMapsExample({super.key});
 
   @override
-  Widget build(BuildContext context) => MapWidget(
-      layerFactory: (context, layerMode) => VectorTileLayer(
-          layerMode: layerMode,
-          tileProviders:
-              TileProviders({'openmaptiles': Providers.stadiaMaps()}),
-          theme: ProvidedThemes.lightTheme()));
+  Widget build(BuildContext context) => MapWidget(layerFactories: [
+        (context, layerMode) => VectorTileLayer(
+            layerMode: layerMode,
+            tileProviders:
+                TileProviders({'openmaptiles': Providers.stadiaMaps()}),
+            theme: ProvidedThemes.lightTheme())
+      ]);
 }
