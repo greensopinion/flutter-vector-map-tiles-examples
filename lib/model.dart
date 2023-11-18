@@ -124,10 +124,12 @@ class Model {
 
 class ExampleModel {
   final String name;
+  late final String navigationPath;
   final String description;
   final WidgetBuilder builder;
 
-  ExampleModel(this.name, this.description, this.builder);
+  ExampleModel(this.name, this.description, this.builder)
+      : navigationPath = name.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_');
 }
 
 Widget _urlRemote(String url, {String? sourceId}) {

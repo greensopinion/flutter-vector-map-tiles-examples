@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: Map.fromEntries(Model().examples.map(
-          (e) => MapEntry(e.name, ((context) => ExamplePage(example: e))))),
+      routes: Map.fromEntries(Model().examples.map((e) =>
+          MapEntry(e.navigationPath, ((context) => ExamplePage(example: e))))),
       home: Scaffold(
           appBar: AppBar(
               title: const Text(
@@ -40,7 +40,7 @@ class MainPage extends StatelessWidget {
             .examples
             .map((e) => Card(
                 child: ListTile(
-                    onTap: () => Navigator.pushNamed(context, e.name),
+                    onTap: () => Navigator.pushNamed(context, e.navigationPath),
                     title: Text(e.name),
                     subtitle: Text(e.description))))
             .toList(),
