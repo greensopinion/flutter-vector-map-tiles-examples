@@ -98,10 +98,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_map
-      sha256: "5286f72f87deb132daa1489442d6cc46e986fc105cb727d9ae1b602b35b1d1f3"
+      sha256: cda8d72135b697f519287258b5294a57ce2f2a5ebf234f0e406aad4dc14c9399
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "6.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -155,6 +155,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      sha256: "6bbb9d6f7056729537a4309bda2e74e18e5d9f14302489cc1e93f33b3fe32cac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2+1"
   matcher:
     dependency: transitive
     description:
@@ -279,10 +287,10 @@ packages:
     dependency: transitive
     description:
       name: protobuf
-      sha256: "01dd9bd0fa02548bf2ceee13545d4a0ec6046459d847b6b061d8a27237108a08"
+      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "3.1.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -356,10 +364,10 @@ packages:
     dependency: "direct main"
     description:
       name: vector_map_tiles
-      sha256: a57095b7b0c81e1c8a58cc148566cd2631b90bbe3a92cd066796552e3f6a12b6
+      sha256: "4b4d141a0fd99da74d14e49565b4c8b792906ebe1d2db3ead301e8d9b465dc21"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "7.0.0"
   vector_math:
     dependency: transitive
     description:
@@ -372,18 +380,18 @@ packages:
     dependency: transitive
     description:
       name: vector_tile
-      sha256: "2ac77f6bbd7ddd97efe059207d67bb7eaf807ab98ad58d99fe41a22c230f44e1"
+      sha256: "3adb04426f3aebefce56f3fdf8ab2e23cc9f7d5b06ff8ca33ae87e3a1e441874"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "2.0.0"
   vector_tile_renderer:
     dependency: "direct main"
     description:
       name: vector_tile_renderer
-      sha256: "33bf5c237c8186e27f9e430a5d06da7e61546fea61b162fd45b29ca4b079af5f"
+      sha256: fe348e8d60485d956a4cb5e28c374a6fd452fc72060088892c72cb786053c052
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.1"
+    version: "5.1.0"
   web:
     dependency: transitive
     description:

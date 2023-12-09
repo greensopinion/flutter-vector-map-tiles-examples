@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material show Theme;
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
@@ -29,15 +30,11 @@ class _MapWidget extends State<MapWidget> {
         FlutterMap(
           mapController: _controller,
           options: MapOptions(
-              center: widget.center ?? const LatLng(43.7763331, 7.4733097),
-              zoom: widget.zoom ?? 13,
+              initialCenter:
+                  widget.center ?? const LatLng(43.7763331, 7.4733097),
+              initialZoom: widget.zoom ?? 13,
               maxZoom: 22,
-              interactiveFlags: InteractiveFlag.rotate |
-                  InteractiveFlag.drag |
-                  InteractiveFlag.flingAnimation |
-                  InteractiveFlag.pinchMove |
-                  InteractiveFlag.pinchZoom |
-                  InteractiveFlag.doubleTapZoom),
+              backgroundColor: material.Theme.of(context).canvasColor),
           children: widget.layerFactories
               .map((layerFactory) => layerFactory(context, _layerMode))
               .toList(),
@@ -69,8 +66,8 @@ class _MapWidget extends State<MapWidget> {
     return TextButton(
         child: Text(
             '$name ${latitude.toStringAsFixed(2)},${longitude.toStringAsFixed(2)}'),
-        onPressed: () =>
-            _controller.move(LatLng(latitude, longitude), _controller.zoom));
+        onPressed: () => _controller.move(
+            LatLng(latitude, longitude), _controller.camera.zoom));
   }
 
   Widget _modeButton(BuildContext context) {
@@ -135,10 +132,10 @@ class _MapStateInfoState extends State<_MapStateInfo> {
     return Padding(
         padding: const EdgeInsets.all(8),
         child: Wrap(direction: Axis.vertical, spacing: 8.0, children: [
-          Text('Zoom: ${widget.mapController.zoom.toStringAsFixed(2)}'),
+          Text('Zoom: ${widget.mapController.camera.zoom.toStringAsFixed(2)}'),
           Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
             Text(
-                'Rotation: ${widget.mapController.rotation.toStringAsFixed(2)}'),
+                'Rotation: ${widget.mapController.camera.rotation.toStringAsFixed(2)}'),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
