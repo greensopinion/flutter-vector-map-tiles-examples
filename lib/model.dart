@@ -137,34 +137,22 @@ class ExampleModel {
       : navigationPath = name.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_');
 }
 
-Widget _urlRemote(String url, {String? sourceId}) {
+Widget _urlRemote(String url,
+    {String? sourceId, TileOffset tileOffset = TileOffset.DEFAULT}) {
   return Loadable(
       loader: () => StyleReader(
               uri: url,
               apiKey: sourceId == null ? null : apiKey(sourceId),
               logger: const Logger.console())
           .read(),
-      builder: (_, remoteTheme) => DynamicStyleExample(style: remoteTheme));
+      builder: (_, remoteTheme) =>
+          DynamicStyleExample(style: remoteTheme, tileOffset: tileOffset));
 }
 
-Widget _mapboxRemote(String styleId) {
-  return Loadable(
-      loader: () => StyleReader(
-              uri: 'mapbox://styles/mapbox/$styleId?access_token={key}',
-              apiKey: apiKey('mapbox'),
-              logger: const Logger.console())
-          .read(),
-      builder: (_, remoteTheme) => DynamicStyleExample(
-          style: remoteTheme, tileOffset: TileOffset.mapbox));
-}
+Widget _mapboxRemote(String styleId) =>
+    _urlRemote('mapbox://styles/mapbox/$styleId?access_token={key}',
+        sourceId: 'mapbox', tileOffset: TileOffset.mapbox);
 
-Widget _maptilerRemote(String styleId) {
-  return Loadable(
-      loader: () => StyleReader(
-              uri:
-                  'https://api.maptiler.com/maps/$styleId/style.json?key={key}',
-              apiKey: apiKey('maptiler'),
-              logger: const Logger.console())
-          .read(),
-      builder: (_, remoteTheme) => DynamicStyleExample(style: remoteTheme));
-}
+Widget _maptilerRemote(String styleId) =>
+    _urlRemote('https://api.maptiler.com/maps/$styleId/style.json?key={key}',
+        sourceId: 'maptiler');
