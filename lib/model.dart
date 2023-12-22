@@ -145,8 +145,12 @@ Widget _urlRemote(String url,
               apiKey: sourceId == null ? null : apiKey(sourceId),
               logger: const Logger.console())
           .read(),
-      builder: (_, remoteTheme) =>
-          DynamicStyleExample(style: remoteTheme, tileOffset: tileOffset));
+      builder: (_, remoteTheme) => DynamicStyleExample(
+            style: remoteTheme,
+            tileOffset: tileOffset,
+            uri: url,
+            apiKey: sourceId == null ? null : apiKey(sourceId),
+          ));
 }
 
 Widget _mapboxRemote(String styleId) =>
