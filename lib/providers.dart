@@ -4,6 +4,9 @@ import 'package:vector_map_tiles/vector_map_tiles.dart';
 class Providers {
   static VectorTileProvider stadiaMaps() => _provider('stadia-maps',
       'https://tiles.stadiamaps.com/data/openmaptiles/{z}/{x}/{y}.pbf?api_key=$apiKeyToken');
+  static VectorTileProvider stadiaMapsDem() => _demProvider('stadia-maps',
+      'https://tiles.stadiamaps.com/data/terrarium/{z}/{x}/{y}.png?api_key=$apiKeyToken');
+
   static VectorTileProvider thunderForestOutdoorsV2() => _provider(
       'thunderforest',
       'https://a.tile.thunderforest.com/thunderforest.outdoors-v2/{z}/{x}/{y}.vector.pbf?apikey=$apiKeyToken');
@@ -12,7 +15,13 @@ class Providers {
 
   static NetworkVectorTileProvider _provider(String id, String urlTemplate) =>
       NetworkVectorTileProvider(
-          maximumZoom: 14, urlTemplate: urlTemplateWithApiKey(id, urlTemplate));
+          maximumZoom: 12, urlTemplate: urlTemplateWithApiKey(id, urlTemplate));
+
+  static VectorTileProvider _demProvider(String id, String urlTemplate) =>
+      NetworkVectorTileProvider(
+          type: TileProviderType.raster_dem,
+          maximumZoom: 12,
+          urlTemplate: urlTemplateWithApiKey(id, urlTemplate));
 }
 
 String apiKey(String id) {

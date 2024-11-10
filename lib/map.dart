@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material show Theme;
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
@@ -20,7 +20,7 @@ class MapWidget extends StatefulWidget {
 
 class _MapWidget extends State<MapWidget> {
   final MapController _controller = MapController();
-  var _layerMode = VectorTileLayerMode.raster;
+  var _layerMode = VectorTileLayerMode.vector;
 
   @override
   Widget build(BuildContext context) {

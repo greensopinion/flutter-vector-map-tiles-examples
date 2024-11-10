@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vector_map_examples/map.dart';
-import 'package:vector_map_examples/providers.dart';
+import '../map.dart';
+import '../providers.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 

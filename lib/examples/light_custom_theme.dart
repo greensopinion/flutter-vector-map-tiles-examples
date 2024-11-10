@@ -14,11 +14,11 @@ class LightCustomThemeExample extends StatelessWidget {
             layerMode: layerMode,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.stadiaMaps()}),
-            theme: ThemeReader().read(_lightStyle()))
+            theme: ThemeReader().read(lightStyle()))
       ]);
 }
 
-dynamic _lightStyle() => {
+dynamic lightStyle() => {
       "version": 8,
       "name": "Empty Style",
       "metadata": {"maputnik:renderer": "mbgljs", "version": "19"},
@@ -27,7 +27,8 @@ dynamic _lightStyle() => {
           "type": "vector",
           "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
         },
-        "hillshade": {"type": "vector", "url": ""}
+        "hillshade": {"type": "vector", "url": ""},
+        "contour": {"type": "raster-dem", "url": ""}
       },
       "layers": [
         {
@@ -81,17 +82,6 @@ dynamic _lightStyle() => {
           "paint": {"fill-color": "#eceff1", "fill-outline-color": "#cfd8dc"}
         },
         {
-          "id": "water",
-          "type": "fill",
-          "source": "openmaptiles",
-          "source-layer": "water",
-          "filter": [
-            "all",
-            ["!=", "brunnel", "tunnel"]
-          ],
-          "paint": {"fill-color": "#bbdefb"}
-        },
-        {
           "id": "hillshade_shadow",
           "type": "fill",
           "source": "hillshade",
@@ -138,6 +128,59 @@ dynamic _lightStyle() => {
               0.08
             ]
           }
+        },
+        {
+          "id": "contour_major",
+          "type": "line",
+          "source": "contour",
+          "source-layer": "contours",
+          "minzoom": 10,
+          "filter": [
+            "all",
+            [">", "ele", 10],
+            ["==", "level", 1]
+          ],
+          "paint": {
+            "line-color": "#66bb6a",
+            "line-width": {
+              "stops": [
+                [10, 0.5],
+                [15, 1]
+              ]
+            }
+          }
+        },
+        {
+          "id": "contour_medium",
+          "type": "line",
+          "source": "contour",
+          "source-layer": "contours",
+          "minzoom": 12,
+          "filter": [
+            "all",
+            [">", "ele", 10],
+            ["==", "level", 0]
+          ],
+          "paint": {
+            "line-color": "#81c784",
+            "line-width": {
+              "stops": [
+                [15, 0.5],
+                [16, 1]
+              ]
+            }
+          }
+        },
+        {
+          "id": "water",
+          "type": "fill",
+          "source": "openmaptiles",
+          "source-layer": "water",
+          "filter": [
+            "all",
+            ["!=", "brunnel", "tunnel"]
+          ],
+          "paint": {"fill-color": "#bbdefb"}
         },
         {
           "id": "aeroway",
@@ -1117,6 +1160,37 @@ dynamic _lightStyle() => {
           "paint": {
             "text-halo-color": "#fff",
             "text-color": "#212121",
+            "text-halo-width": 1
+          }
+        },
+        {
+          "id": "elevation_label",
+          "type": "symbol",
+          "source": "contour",
+          "source-layer": "contours",
+          "minzoom": 12,
+          "filter": [
+            "all",
+            [">", "ele", 10],
+            ["==", "level", 1]
+          ],
+          "layout": {
+            "symbol-placement": "line",
+            "text-field": "{ele} level={level}",
+            "visibility": "visible",
+            "text-font": ["Roboto Regular"],
+            "text-size": {
+              "base": 1,
+              "stops": [
+                [13, 10],
+                [14, 12],
+                [18, 14]
+              ]
+            }
+          },
+          "paint": {
+            "text-halo-color": "#EEEEEE",
+            "text-color": "#81c784",
             "text-halo-width": 1
           }
         }
