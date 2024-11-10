@@ -135,6 +135,7 @@ dynamic lightStyle() => {
           "source": "contour",
           "source-layer": "contours",
           "minzoom": 10,
+          "maxzoom": 14,
           "filter": [
             "all",
             [">", "ele", 10],
@@ -156,6 +157,7 @@ dynamic lightStyle() => {
           "source": "contour",
           "source-layer": "contours",
           "minzoom": 12,
+          "maxzoom": 14,
           "filter": [
             "all",
             [">", "ele", 10],
@@ -1169,6 +1171,7 @@ dynamic lightStyle() => {
           "source": "contour",
           "source-layer": "contours",
           "minzoom": 12,
+          "maxzoom": 14,
           "filter": [
             "all",
             [">", "ele", 10],
@@ -1176,7 +1179,7 @@ dynamic lightStyle() => {
           ],
           "layout": {
             "symbol-placement": "line",
-            "text-field": "{ele} level={level}",
+            "text-field": "{ele}",
             "visibility": "visible",
             "text-font": ["Roboto Regular"],
             "text-size": {
