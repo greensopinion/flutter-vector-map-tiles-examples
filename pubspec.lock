@@ -451,10 +451,11 @@ packages:
   vector_map_tiles:
     dependency: "direct main"
     description:
-      path: "../vector_map_tiles"
-      relative: true
-    source: path
-    version: "9.0.0-beta.1"
+      name: vector_map_tiles
+      sha256: "978514a34deb1bd11ec0f9e42da4646fccfa6343b8135776cdbacaa451f40679"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.0-beta.2"
   vector_math:
     dependency: transitive
     description:
@@ -474,10 +475,11 @@ packages:
   vector_tile_dem:
     dependency: transitive
     description:
-      path: "../vector_tile_dem"
-      relative: true
-    source: path
-    version: "0.0.1"
+      name: vector_tile_dem
+      sha256: "81a3568d2213817bd2698f919357e5107c0261491ae1014e821ed4fc3c2bf740"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   vector_tile_renderer:
     dependency: "direct main"
     description:
