@@ -2,9 +2,8 @@ import 'package:flutter/material.dart' as material show Theme;
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
 
-typedef LayerFactory = Widget Function(BuildContext, VectorTileLayerMode mode);
+typedef LayerFactory = Widget Function(BuildContext);
 
 class MapWidget extends StatefulWidget {
   final List<LayerFactory> layerFactories;
@@ -20,7 +19,6 @@ class MapWidget extends StatefulWidget {
 
 class _MapWidget extends State<MapWidget> {
   final MapController _controller = MapController();
-  var _layerMode = VectorTileLayerMode.vector;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +33,14 @@ class _MapWidget extends State<MapWidget> {
               initialZoom: widget.zoom ?? 13,
               maxZoom: 22,
               backgroundColor: material.Theme.of(context).canvasColor),
-          children: widget.layerFactories
-              .map((layerFactory) => layerFactory(context, _layerMode))
-              .toList(),
+          children: <Widget>[
+                // Container(
+                //   color: Colors.orange,
+                // )
+              ] +
+              widget.layerFactories
+                  .map((layerFactory) => layerFactory(context))
+                  .toList(),
         ),
         Positioned(
             top: 0,
@@ -45,7 +48,7 @@ class _MapWidget extends State<MapWidget> {
             child: Container(
               color: Theme.of(context).canvasColor,
               child: Column(
-                  children: [_modeButton(context), _mapInfo(context)]
+                  children: [_mapInfo(context)]
                       .map((e) => Padding(
                           padding: const EdgeInsets.only(top: 10, bottom: 2),
                           child: e))
@@ -68,30 +71,6 @@ class _MapWidget extends State<MapWidget> {
             '$name ${latitude.toStringAsFixed(2)},${longitude.toStringAsFixed(2)}'),
         onPressed: () => _controller.move(
             LatLng(latitude, longitude), _controller.camera.zoom));
-  }
-
-  Widget _modeButton(BuildContext context) {
-    return Container(
-        color: Theme.of(context).canvasColor,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const Text("Mode"),
-          ToggleButtons(
-              onPressed: (index) {
-                setState(() {
-                  _layerMode = index == 0
-                      ? VectorTileLayerMode.raster
-                      : VectorTileLayerMode.vector;
-                });
-              },
-              isSelected: [
-                _layerMode == VectorTileLayerMode.raster,
-                _layerMode == VectorTileLayerMode.vector
-              ],
-              children: const [
-                Text('Raster'),
-                Text('Vector'),
-              ])
-        ]));
   }
 
   Widget _mapInfo(BuildContext context) =>

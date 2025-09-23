@@ -12,11 +12,9 @@ class DynamicStyleExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       MapWidget(center: style.center, layerFactories: [
-        (context, layerMode) => VectorTileLayer(
+        (context) => VectorTileLayer(
             tileProviders: style.providers,
             theme: style.theme,
-            sprites: style.sprites,
-            layerMode: layerMode,
             tileOffset: tileOffset)
       ]);
 }

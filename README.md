@@ -7,6 +7,12 @@ Provides an example application demonstrating use of [vector_map_tiles](https://
 1. Copy `lib/api_keys.dart.example` to `lib/api_keys.dart` and edit the file with your own API keys.
 2. Run the application
 
+## Dependencies
+
+The 10.0.0 version is targeting [vector_map_tiles 10.0.0](https://github.com/greensopinion/flutter-vector-map-tiles/tree/10.0.0), an experimental version using `flutter_gpu`.
+
+See the [GPU readme](https://github.com/greensopinion/dart-vector-tile-renderer/tree/7.0.0/lib/src/gpu/) for a to-do list and completed features.
+
 ## License
 
 Copyright 2023 David Green

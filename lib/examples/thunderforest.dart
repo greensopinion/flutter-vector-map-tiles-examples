@@ -10,8 +10,8 @@ class ThunderforestExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(layerFactories: [
-        (context, layerMode) => VectorTileLayer(
-            layerMode: layerMode,
+        (context) => VectorTileLayer(
+            tileOffset: TileOffset.DEFAULT,
             tileProviders: TileProviders({
               'thunderforest_outdoors': Providers.thunderForestOutdoorsV2()
             }),

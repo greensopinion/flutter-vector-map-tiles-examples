@@ -10,8 +10,8 @@ class MaptilerExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(layerFactories: [
-        (context, layerMode) => VectorTileLayer(
-            layerMode: layerMode,
+        (context) => VectorTileLayer(
+            tileOffset: TileOffset.DEFAULT,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.mapTiler()}),
             theme: ProvidedThemes.lightTheme())

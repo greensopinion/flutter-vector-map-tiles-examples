@@ -47,5 +47,16 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>FLTEnableImpeller</key>
+	<true/>
+	<key>FLTEnableFlutterGPU</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>http</string>
+		<string>https</string>
+	</array>
 </dict>
 </plist>

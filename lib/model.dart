@@ -1,12 +1,11 @@
 import 'package:flutter/widgets.dart';
-import 'examples/contours_from_terrarium_dem.dart';
-import 'examples/light_custom_theme.dart';
-import 'examples/multi_layer.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart';
 
 import 'examples/dynamic.dart';
+import 'examples/light_custom_theme.dart';
 import 'examples/maptiler.dart';
+import 'examples/multi_layer.dart';
 import 'examples/stadiamaps.dart';
 import 'examples/thunderforest.dart';
 import 'loadable.dart';
@@ -18,10 +17,6 @@ class Model {
         'Default Theme: Stadia Maps',
         'Demonstrates Stadia Maps with the default theme.',
         (_) => const StadiaMapsExample()),
-    ExampleModel(
-        'Contour Lines from DEM',
-        'Demonstrates Stadia Maps with contour lines from DEM terrarium tiles.',
-        (_) => const ContoursFromTerrariumDemExample()),
     ExampleModel(
         'Default Theme: MapTiler',
         'Demonstrates use of MapTiler with the default theme.',

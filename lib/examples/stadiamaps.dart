@@ -10,8 +10,8 @@ class StadiaMapsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(layerFactories: [
-        (context, layerMode) => VectorTileLayer(
-            layerMode: layerMode,
+        (context) => VectorTileLayer(
+            tileOffset: TileOffset.DEFAULT,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.stadiaMaps()}),
             theme: ProvidedThemes.lightTheme())

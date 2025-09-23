@@ -13,19 +13,18 @@ class MultiLayerExample extends StatelessWidget {
         // however any widget can be used. For example, vector tile layers
         // could be combined with any other map layer from flutter_map or
         // third party plugins.
-        (context, layerMode) => VectorTileLayer(
+        (context) => VectorTileLayer(
             key: const Key('map_bottom_layer'),
-            layerMode: VectorTileLayerMode.raster,
-            tileOffset: const TileOffset(zoomOffset: 0),
+            tileOffset: TileOffset.DEFAULT,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.stadiaMaps()}),
             theme: ThemeReader().read(_baseLayerStyle())),
         // The top layer must not have a style with an opaque background layer in it
         // otherwise the background layer will draw over other layers causing them
         // to be invisible.
-        (context, layerMode) => VectorTileLayer(
+        (context) => VectorTileLayer(
             key: const Key('map_top_layer'),
-            layerMode: layerMode,
+            tileOffset: TileOffset.DEFAULT,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.stadiaMaps()}),
             theme: ThemeReader().read(_topLayerStyle()))

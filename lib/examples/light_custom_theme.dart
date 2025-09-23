@@ -10,8 +10,8 @@ class LightCustomThemeExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MapWidget(layerFactories: [
-        (context, layerMode) => VectorTileLayer(
-            layerMode: layerMode,
+        (context) => VectorTileLayer(
+            tileOffset: TileOffset.DEFAULT,
             tileProviders:
                 TileProviders({'openmaptiles': Providers.stadiaMaps()}),
             theme: ThemeReader().read(lightStyle()))
@@ -27,8 +27,6 @@ dynamic lightStyle() => {
           "type": "vector",
           "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
         },
-        "hillshade": {"type": "vector", "url": ""},
-        "contour": {"type": "raster-dem", "url": ""}
       },
       "layers": [
         {
@@ -80,98 +78,6 @@ dynamic lightStyle() => {
           "minzoom": 15.0,
           "filter": ["in", "class", "cemetery", "hospital", "school"],
           "paint": {"fill-color": "#eceff1", "fill-outline-color": "#cfd8dc"}
-        },
-        {
-          "id": "hillshade_shadow",
-          "type": "fill",
-          "source": "hillshade",
-          "source-layer": "hillshade",
-          "filter": [
-            "all",
-            ["==", "class", "shadow"],
-            ["in", "level", 89, 78, 67, 56]
-          ],
-          "paint": {
-            "fill-color": "#000",
-            "fill-opacity": [
-              "match",
-              ["get", "level"],
-              89,
-              0.02,
-              78,
-              0.04,
-              67,
-              0.06,
-              56,
-              0.08
-            ]
-          }
-        },
-        {
-          "id": "hillshade_highlight",
-          "type": "fill",
-          "source": "hillshade",
-          "source-layer": "hillshade",
-          "filter": [
-            "all",
-            ["==", "class", "highlight"],
-            ["in", "level", 90, 94]
-          ],
-          "paint": {
-            "fill-color": "#fff",
-            "fill-opacity": [
-              "match",
-              ["get", "level"],
-              90,
-              0.04,
-              94,
-              0.08
-            ]
-          }
-        },
-        {
-          "id": "contour_major",
-          "type": "line",
-          "source": "contour",
-          "source-layer": "contours",
-          "minzoom": 10,
-          "maxzoom": 14,
-          "filter": [
-            "all",
-            [">", "ele", 10],
-            ["==", "level", 1]
-          ],
-          "paint": {
-            "line-color": "#66bb6a",
-            "line-width": {
-              "stops": [
-                [10, 0.5],
-                [15, 1]
-              ]
-            }
-          }
-        },
-        {
-          "id": "contour_medium",
-          "type": "line",
-          "source": "contour",
-          "source-layer": "contours",
-          "minzoom": 12,
-          "maxzoom": 14,
-          "filter": [
-            "all",
-            [">", "ele", 10],
-            ["==", "level", 0]
-          ],
-          "paint": {
-            "line-color": "#81c784",
-            "line-width": {
-              "stops": [
-                [15, 0.5],
-                [16, 1]
-              ]
-            }
-          }
         },
         {
           "id": "water",
@@ -1165,38 +1071,6 @@ dynamic lightStyle() => {
             "text-halo-width": 1
           }
         },
-        {
-          "id": "elevation_label",
-          "type": "symbol",
-          "source": "contour",
-          "source-layer": "contours",
-          "minzoom": 12,
-          "maxzoom": 14,
-          "filter": [
-            "all",
-            [">", "ele", 10],
-            ["==", "level", 1]
-          ],
-          "layout": {
-            "symbol-placement": "line",
-            "text-field": "{ele}",
-            "visibility": "visible",
-            "text-font": ["Roboto Regular"],
-            "text-size": {
-              "base": 1,
-              "stops": [
-                [13, 10],
-                [14, 12],
-                [18, 14]
-              ]
-            }
-          },
-          "paint": {
-            "text-halo-color": "#EEEEEE",
-            "text-color": "#81c784",
-            "text-halo-width": 1
-          }
-        }
       ],
       "id": "light"
     };
