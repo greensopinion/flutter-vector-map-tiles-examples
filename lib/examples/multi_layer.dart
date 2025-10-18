@@ -39,8 +39,7 @@ dynamic _baseLayerStyle() => {
         "openmaptiles": {
           "type": "vector",
           "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
-        },
-        "hillshade": {"type": "vector", "url": ""}
+        }
       },
       "layers": [
         {
@@ -159,54 +158,6 @@ dynamic _baseLayerStyle() => {
             ["!=", "brunnel", "tunnel"]
           ],
           "paint": {"fill-color": "#bbdefb"}
-        },
-        {
-          "id": "hillshade_shadow",
-          "type": "fill",
-          "source": "hillshade",
-          "source-layer": "hillshade",
-          "filter": [
-            "all",
-            ["==", "class", "shadow"],
-            ["in", "level", 89, 78, 67, 56]
-          ],
-          "paint": {
-            "fill-color": "#000",
-            "fill-opacity": [
-              "match",
-              ["get", "level"],
-              89,
-              0.02,
-              78,
-              0.04,
-              67,
-              0.06,
-              56,
-              0.08
-            ]
-          }
-        },
-        {
-          "id": "hillshade_highlight",
-          "type": "fill",
-          "source": "hillshade",
-          "source-layer": "hillshade",
-          "filter": [
-            "all",
-            ["==", "class", "highlight"],
-            ["in", "level", 90, 94]
-          ],
-          "paint": {
-            "fill-color": "#fff",
-            "fill-opacity": [
-              "match",
-              ["get", "level"],
-              90,
-              0.04,
-              94,
-              0.08
-            ]
-          }
         },
         {
           "id": "aeroway",
@@ -831,8 +782,7 @@ dynamic _topLayerStyle() => {
         "openmaptiles": {
           "type": "vector",
           "url": "https://api.maptiler.com/tiles/v3/tiles.json?key={key}"
-        },
-        "hillshade": {"type": "vector", "url": ""}
+        }
       },
       "layers": [
         {
